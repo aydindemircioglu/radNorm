@@ -23,4 +23,10 @@ To regenerate figures:
 
 
 
+
+## Normalization
+
+Scheme A: Apply normalization upfront to all data
+Scheme B: Apply normalization inside CV (=correct)
+
 #

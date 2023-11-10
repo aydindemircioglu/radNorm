@@ -87,7 +87,38 @@ def cropImage (img):
 
 
 
+def generateFigure2():
+    shutil.copyfile ("./results/Fig3a.png", "./paper/Figure_2.png")
+
+
 def generateFigure3(m = 128, fs = 96):
+    f3a = cv2.imread("./results/Fig3b.png")
+    f3b = cv2.imread("./results/Fig3c.png")
+    f3a = cv2.cvtColor(f3a, cv2.COLOR_RGB2BGR)
+    f3b = cv2.cvtColor(f3b, cv2.COLOR_RGB2BGR)
+    f3a = addText (f3a, "a", (96,200), "Arial", fs, color=(0,0,0))
+    f3b = addText (f3b, "b", (96,200), "Arial", fs, color=(0,0,0))
+
+    h = f3a.shape[0] + m + f3b.shape[0]
+    w = np.max([f3a.shape[1], f3b.shape[1]])
+    z = np.zeros((h,w,3), dtype = np.uint8)+255
+
+    # place 1
+    d = (w - f3a.shape[1])//2
+    z[0:f3a.shape[0], d:d+f3a.shape[1],:] = f3a
+
+    # place 2
+    d = (w - f3b.shape[1])//2
+    z[m+f3a.shape[0]:h, d:d+f3b.shape[1],:] = f3b
+    Image.fromarray(z)
+
+    z = cropImage(z)
+    z = cv2.cvtColor(z, cv2.COLOR_RGB2BGR)
+    cv2.imwrite("./paper/Figure_3.png", z)
+
+
+
+def generateFigure4(m = 128, fs = 96):
     f4a = cv2.imread("./results/Fig4a.png")
     f4b = cv2.imread("./results/Fig4b.png")
     f4a = cv2.cvtColor(f4a, cv2.COLOR_RGB2BGR)
@@ -104,19 +135,48 @@ def generateFigure3(m = 128, fs = 96):
 
     z = cropImage(z)
     z = cv2.cvtColor(z, cv2.COLOR_RGB2BGR)
-    cv2.imwrite("./paper/Figure_3.png", z)
+    cv2.imwrite("./paper/Figure_4.png", z)
 
 
-def generateFigure4():
-    shutil.copyfile ("./results/Fig5.png", "./paper/Figure_4.png")
+
+def generateFigure5(m = 128, fs = 96):
+    f3a = cv2.imread("./results/Fig5.png")
+    f3b = cv2.imread("./results/Fig6.png")
+    f3a = cv2.cvtColor(f3a, cv2.COLOR_RGB2BGR)
+    f3b = cv2.cvtColor(f3b, cv2.COLOR_RGB2BGR)
+    f3a = addText (f3a, "a", (96,200), "Arial", fs, color=(0,0,0))
+    f3b = addText (f3b, "b", (96,200), "Arial", fs, color=(0,0,0))
+
+    h = f3a.shape[0] + m + f3b.shape[0]
+    w = np.max([f3a.shape[1], f3b.shape[1]])
+    z = np.zeros((h,w,3), dtype = np.uint8)+255
+
+    # place 1
+    d = (w - f3a.shape[1])//2
+    z[0:f3a.shape[0], d:d+f3a.shape[1],:] = f3a
+
+    # place 2
+    d = (w - f3b.shape[1])//2
+    z[m+f3a.shape[0]:h, d:d+f3b.shape[1],:] = f3b
+    Image.fromarray(z)
+
+    z = cropImage(z)
+    z = cv2.cvtColor(z, cv2.COLOR_RGB2BGR)
+    cv2.imwrite("./paper/Figure_5.png", z)
+
+
 
 def generateFigureS1():
-    shutil.copyfile ("./results/FigS1.png", "./paper/Supplementary_Figure.png")
+    shutil.copyfile ("./results/FigS1_0.png", "./paper/Supplementary_Figure_1a.png")
+    shutil.copyfile ("./results/FigS1_1.png", "./paper/Supplementary_Figure_1b.png")
+    shutil.copyfile ("./results/FigS1_2.png", "./paper/Supplementary_Figure_1c.png")
+    shutil.copyfile ("./results/FigS2.png", "./paper/Supplementary_Figure_2.png")
 
 if __name__ == '__main__':
     generateFigure2()
     generateFigure3()
     generateFigure4()
+    generateFigure5()
     generateFigureS1()
 
 
